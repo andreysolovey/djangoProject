@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Data</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            background:#f0ffff;
+        }
+        header {
+            display: flex;
+            align-content: center;
+            flex-direction: row;
+            justify-content: center;
+            height: 100px;
+            background: darksalmon;
+            color: #4B0082;
+        }
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #4B0082;
+        }
+        form div {
+            margin-top: 6px;
+        }
+        #submit {
+            margin-top: 6px;
+        }
+        .links {
+            text-decoration: none;
+            color: #4B0082;
+        }
+        .links:hover {
+            color: #6B8E23;
+        }
+    </style>
+    <script>
+        var cc = myform.cardcode,
+            events  = ['input', 'change', 'blur', 'keyup'];
+        for (var i in events) {
+            cc.addEventListener(events[i], formatCardCode, false);
+        }
+        function formatCardCode() {
+            var cardCode = this.value.replace(/[^\d]/g, '').substring(0,16);
+            cardCode = cardCode !== '' ? cardCode.match(/.{1,4}/g).join(' ') : '';
+            this.value = cardCode;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Payment service</h1>
+        </div>
+    </header>
+    <div class="content">
+        <h1>To pay you must fill in the fields below </h1>
+            <form method="post" action="{% url 'Start_path' %}" class="form_account" name="myfrom">
+                <div>Enter bank account</div>
+                <input name="bank_account" type="text" maxlength="13" aria-label="Bank_account" required>
+                <div>Enter your card number </div>
+                <input type="text" name="cardcode" pattern="[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" aria-label="card_number" required>
+                <div>Enter validity</div>
+                <input name="validity" type="text" maxlength="4" aria-label="Validity" required>
+                <div>CVC</div>
+                <input name="CVC" type="text" maxlength="3" aria-label="CVC" required>
+                <div>Enter amount to pay </div>
+                <input name="amount_to_pay" type="number" aria-label="Amount_to_pay" required>
+                {% csrf_token %}
+                <br>
+                <input id="submit" type="submit" value="Transfer money">
+            </form>
+        <div><a href="{% url 'history_list' %}" class="links"><h2>History payments</h2></a> </div>
+    </div>
+</body>
+</html>

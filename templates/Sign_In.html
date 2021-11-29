@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Data</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            background:#f0ffff;
+        }
+        header {
+            display: flex;
+            align-content: center;
+            flex-direction: row;
+            justify-content: center;
+            height: 100px;
+            background: darksalmon;
+            color: #4B0082;
+        }
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .form_sign_in {
+            border: black solid 2px;
+            border-radius: 6px;
+            margin-top: 70px;
+        }
+        input {
+            margin: 7px;
+        }
+        .div {
+            margin: 7px;
+        }
+        #registration {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #4B0082;
+        }
+        #registration:hover {
+            color: #6B8E23;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Payment service</h1>
+        </div>
+    </header>
+    <div class="content">
+        <form method="post" action="{% url 'Sing_In' %}" class="form_sign_in">
+            <div class="div">Username:</div>
+            <input type="text" name="username" aria-label="Username" required>
+            <div class="div">Password:</div>
+            <input type="password" name="password" aria-label="Password" required>
+            {% csrf_token %}
+            <br>
+            <input type="submit" value="Log in">
+            {% if error %}
+                <div class="error">Wrong email or password</div>
+            {% endif %}
+        </form>
+    <a id="registration" href="{% url 'Sign-Up' %}" ><h3>Registration</h3></a>
+    </div>
+</body>
+</html>
